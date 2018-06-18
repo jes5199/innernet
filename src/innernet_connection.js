@@ -1,0 +1,4 @@
+class InnernetConnection {
+}
+
+export {InnernetConnection};
