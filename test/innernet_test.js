@@ -68,6 +68,19 @@ describe('Innernet', () => {
   });
 
   describe('integration', () => {
+    it('should receive messages that come in from connections', () => {
+      let msg;
+      let hook = (m) => {msg = m};
+      let sng = new StaticNetworkGraph({
+        'node': {}
+      });
+      let innernet = new Innernet("node", sng, hook);
+      let conn = new FakeConnection("remote_id", 51);
+      innernet.addConnection(conn);
+      conn.receiveMessage({route: ["node"], body: {message: "yes"}});
+      assert.deepEqual(msg, {message: "yes"});
+    });
+
     it('should relay message the whole way', () => {
       
     });

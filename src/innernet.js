@@ -10,6 +10,7 @@ class Innernet {
     let remote_id = conn.getRemoteId();
     this.networkGraph.addPath(this.localId, remote_id, conn.getCost());
     this.connections[remote_id] = conn;
+    conn.joinNetwork(this);
   }
 
   sendMessage(dest_id, body) {
