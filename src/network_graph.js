@@ -6,6 +6,9 @@ class NetworkGraph {
     return [];
   }
 
+  addNode(node) {
+  }
+
   /**
    * Find the lowest-cost path between originAddr and destAddr
    * Returns an array of addresses, or undefined if no path exists

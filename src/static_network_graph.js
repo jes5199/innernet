@@ -17,6 +17,12 @@ class StaticNetworkGraph extends NetworkGraph {
   addPath(origin, dest, cost) {
     this.data[origin][dest] = cost;
   }
+
+  addNode(id) {
+    if(!this.data[id]) {
+      this.data[id] = {};
+    }
+  }
 };
 
 export {StaticNetworkGraph};

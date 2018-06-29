@@ -4,6 +4,8 @@ class InnernetNode {
     this.networkGraph = graph;
     this.connections = {};
     this.onmessage = onmessage;
+
+    graph.addNode(local_id);
   }
 
   addConnection(conn) {

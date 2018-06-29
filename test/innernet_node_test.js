@@ -85,12 +85,7 @@ describe('InnernetNode', () => {
     it('should relay message the whole way', () => {
       let msg;
       let hook = (m) => {msg = m};
-      let sng = new StaticNetworkGraph({
-        // TODO: addNode
-        start: {},
-        middle: {},
-        final: {}
-      });
+      let sng = new StaticNetworkGraph({});
 
       let noop = (m) => {};
 
