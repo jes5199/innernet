@@ -1,4 +1,4 @@
-class Innernet {
+class InnernetNode {
   constructor(local_id, graph, onmessage) {
     this.localId = local_id;
     this.networkGraph = graph;
@@ -39,4 +39,4 @@ class Innernet {
   }
 }
 
-export {Innernet};
+export {InnernetNode};

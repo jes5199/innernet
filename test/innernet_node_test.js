@@ -1,19 +1,19 @@
 const assert = require('assert')
 
-const { Innernet } = require('../src/innernet')
+const { InnernetNode } = require('../src/innernet_node')
 const { StaticNetworkGraph } = require('../src/static_network_graph')
 const { FakeConnection } = require('../src/fake_connection')
 const { FunctionConnection } = require('../src/function_connection')
 
-describe('Innernet', () => {
-  // Innernet takes a network graph object as parameter.
-  // Innernet.addConnection(conn) takes a connection object, and adds it to the graph
+describe('InnernetNode', () => {
+  // InnernetNode takes a network graph object as parameter.
+  // InnernetNode.addConnection(conn) takes a connection object, and adds it to the graph
   describe('.addConnection(conn)', () => {
     it('should add the connection to the graph', () => {
       let sng = new StaticNetworkGraph({
         'node': {}
       });
-      let innernet = new Innernet("node", sng);
+      let innernet = new InnernetNode("node", sng);
       let conn = new FakeConnection("remote_id", 51);
       innernet.addConnection(conn);
       assert.deepEqual(sng.data, { 'node': {'remote_id': 51} });
@@ -26,7 +26,7 @@ describe('Innernet', () => {
         'node': {},
         'remote_id': {'distant_id': 10}
       });
-      let innernet = new Innernet("node", sng);
+      let innernet = new InnernetNode("node", sng);
       let conn = new FakeConnection("remote_id", 51);
       innernet.addConnection(conn);
       innernet.sendMessage("distant_id", ["something", {"message": true}]);
@@ -45,7 +45,7 @@ describe('Innernet', () => {
       let msg;
       let hook = (m) => {msg = m};
       let sng = new StaticNetworkGraph({ 'node': {} });
-      let innernet = new Innernet("node", sng, hook);
+      let innernet = new InnernetNode("node", sng, hook);
       innernet.receiveMessage({route: ["node"], body: {message: "yes"}});
       assert.deepEqual(msg, {message: "yes"});
     });
@@ -54,7 +54,7 @@ describe('Innernet', () => {
       let msg;
       let hook = (m) => {msg = m};
       let sng = new StaticNetworkGraph({ 'node': {} });
-      let innernet = new Innernet("node", sng, hook);
+      let innernet = new InnernetNode("node", sng, hook);
       let conn = new FakeConnection("next", 51);
       innernet.addConnection(conn);
       innernet.receiveMessage({route: ["node", "next"], body: {message: "yes"}});
@@ -75,7 +75,7 @@ describe('Innernet', () => {
       let sng = new StaticNetworkGraph({
         'node': {}
       });
-      let innernet = new Innernet("node", sng, hook);
+      let innernet = new InnernetNode("node", sng, hook);
       let conn = new FakeConnection("remote_id", 51);
       innernet.addConnection(conn);
       conn.receiveMessage({route: ["node"], body: {message: "yes"}});
@@ -94,10 +94,9 @@ describe('Innernet', () => {
 
       let noop = (m) => {};
 
-      // suddenly I grok the problem with this class name
-      let innernet1 = new Innernet("start", sng, noop);
-      let innernet2 = new Innernet("middle", sng, noop);
-      let innernet3 = new Innernet("final", sng, hook);
+      let innernet1 = new InnernetNode("start", sng, noop);
+      let innernet2 = new InnernetNode("middle", sng, noop);
+      let innernet3 = new InnernetNode("final", sng, hook);
 
       let conn1to2 = new FunctionConnection("middle", 1, (m) => {innernet2.receiveMessage(m)});
       innernet1.addConnection(conn1to2);
